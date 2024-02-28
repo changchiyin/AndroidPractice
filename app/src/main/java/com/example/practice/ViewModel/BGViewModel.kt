@@ -1,11 +1,16 @@
-package com.example.practice
+package com.example.practice.ViewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.practice.Model.BGDataClass
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import okhttp3.Call
 import okhttp3.Callback
+import okhttp3.FormBody
+import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
@@ -22,8 +27,12 @@ class BGViewModel:ViewModel() {
     }
 
     fun getData(offset:Int = 0){
+        val urlBuilder = "https://data.taipei/api/v1/dataset".toHttpUrl().newBuilder()
+            .addPathSegment("f18de02f-b6c9-47c0-8cda-50efad621c14")
+            .addQueryParameter("scope","resourceAquire")
+            .addQueryParameter("offset", offset.toString())
         val request: Request = Request.Builder()
-            .url("https://data.taipei/api/v1/dataset/f18de02f-b6c9-47c0-8cda-50efad621c14?scope=resourceAquire&offset=${offset}")
+            .url(urlBuilder.build().toString())
             .get()
             .build()
         val call: Call = client.newCall(request)

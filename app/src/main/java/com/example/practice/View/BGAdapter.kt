@@ -1,4 +1,4 @@
-package com.example.practice
+package com.example.practice.View
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,14 +8,16 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.practice.Model.BGDataClass
+import com.example.practice.R
 
-class MyAdapter() : RecyclerView.Adapter<MyViewHolder>() {
-    private var myData:List<BGDataClass> = emptyList()
-    fun setMyData(data:List<BGDataClass>){
-        this.myData = data
+class BGAdapter : RecyclerView.Adapter<MyViewHolder>() {
+    private var bgData:List<BGDataClass> = emptyList()
+    fun setData(data:List<BGDataClass>){
+        this.bgData = data
     }
 
-    lateinit var context:Context
+    private lateinit var context:Context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         context = parent.context
@@ -24,14 +26,14 @@ class MyAdapter() : RecyclerView.Adapter<MyViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.name.text = myData[position].name
-        holder.location.text = myData[position].location
-        holder.feature.text = myData[position].feature
-        Glide.with(context).load(myData[position].url).centerCrop().into(holder.image)
+        holder.name.text = bgData[position].name
+        holder.location.text = bgData[position].location
+        holder.feature.text = bgData[position].feature
+        Glide.with(context).load(bgData[position].url).centerCrop().into(holder.image)
     }
 
     override fun getItemCount(): Int {
-        return myData.size
+        return bgData.size
     }
 }
 
