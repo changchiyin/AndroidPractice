@@ -12,12 +12,12 @@ import com.example.practice.Model.BGDataClass
 import com.example.practice.R
 
 class BGAdapter : RecyclerView.Adapter<MyViewHolder>() {
-    private var bgData:List<BGDataClass> = emptyList()
-    fun setData(data:List<BGDataClass>){
+    private var bgData: List<BGDataClass> = emptyList()
+    fun setData(data: List<BGDataClass>) {
         this.bgData = data
     }
 
-    private lateinit var context:Context
+    private lateinit var context: Context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         context = parent.context

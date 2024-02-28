@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     private val viewModel = BGViewModel()
     private val adapter = BGAdapter()
     private var count = 0
+
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +31,14 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-//                adapter.getFilter().filter(newText)
+                if (newText == null) {
+                    viewModel.listLiveData.value?.let {
+                        adapter.setData(it)
+                    }
+                } else {
+                    adapter.setData(viewModel.filterData(newText))
+                }
+                adapter.notifyDataSetChanged()
                 return false
             }
         })
@@ -44,14 +52,15 @@ class MainActivity : AppCompatActivity() {
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                if (!recyclerView.canScrollVertically(1)) {
-                    count+=20
+                if (!recyclerView.canScrollVertically(1) && adapter.itemCount > 0) {
+                    count += 20
                     viewModel.getData(count)
                 }
             }
         })
 
-        viewModel.listLiveData.observe(this
+        viewModel.listLiveData.observe(
+            this
         ) { list ->
             adapter.setData(list)
             adapter.notifyDataSetChanged()

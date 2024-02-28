@@ -4,11 +4,11 @@ import com.google.gson.annotations.SerializedName
 
 data class BGDataClass(
     @SerializedName("F_Name_Ch")
-    val name:String,
+    val name: String,
     @SerializedName("F_Location")
-    val location:String,
+    val location: String,
     @SerializedName("F_Feature")
-    val feature:String,
+    val feature: String,
     @SerializedName("F_Pic01_URL")
-    val url:String
+    val url: String
 )
